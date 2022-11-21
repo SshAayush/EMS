@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMS</title>
+    {% comment %} <link rel="stylesheet" href="login.css"> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+</head>
+<body>
+    {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        <strong>Message:</strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+    {% endfor %}
+    <a href= "/staff"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAflJREFUSEutVtF1hDAMkzehmxyTXNmEbkInuRuFTdIHccBJZBLa9qOvjyaWrUhKBOWPAAj60f5NPpF/V+X4B8G2F/vvBNbYemOph7ljRWCLrpVPAELBn9ETcAVmm72Bclmnno9Q8l9T+iIxVHfqAngAWAFZK2HsOI2mEyv8LFVvdcMb6AuCFQHj3kC1pmELw3gf1XHSl9HhBvzu4slhvLlXgEdIoHF1BXpDgkfvxMdZmURv8t8Y7KQVs30ttMR10hv7HIFw0MshrKc8f6Xk4rmpoEf5gt5tc9DA65/SpvGhs7OQERJ2gDEI3nmseh61DZEgUssxqgt68WXV2zOb47BVgDXavKa6pLe4Q/wkOheSMyZOKCeeATwBDJ7HvMBpejKzYDbxUXIG5AkEBZdFEL4TRZf352WK5WFjJs52lZNPAJZ8qh7ac3EZ8eYPgYJGBZdBp5wAWfjFkGf79eB7HtiHAD2lHVyAQf1HJo+F7h0BIJVY6gicgWAFN0GwlO8ydQnHJwEWz7jNzQzBEwGDAkwIlnYSGh4JqYlqQO3ECkEPoUNw5ri8mL6+j139zgI89bw/2l73fdBFdcHap2stTh/tzwE2fBTv7bYcyLOJNFQDXzrDuwobdiJzRDtdUpQX5RP3AZ+c86zmDuu4BdwlTrqS9dYLjUz+ZZs/S7zhJhz6J60AAAAASUVORK5CYII="/></a>
+    <div class="signupmain">
+        <p class="sign" align="center">Add Staff</p>
+        <form action="/signup" method="post"> 
+        {% csrf_token %}
+            <input class ="un " type="text" id="username" name="username" placeholder="Username">
+            <input class ="un " type="text" id="fname" name="fname" value = "{{ fname }}" placeholder="First Name">
+            <input class ="un " type="text" id="lname" name="lname" value = "{{ lname }}" placeholder="Last Name">
+            <input class ="un " type="email" id="email" name="email" value = "{{ email }}" placeholder="E-mail">
+            <input class ="pass " type="password" id="password1" name="password1" placeholder="Password">
+            <input class ="pass " type="password" id="password2" name="password2" placeholder="Confirm Password">
+            <button class="submit" type="submit"> SignUp</button>
+        </form>
+    </div>
+    {% else %}
+    <div class="sign">
+        <p class="un " align="center">Admin account is required!!<br>To access this page</p>
+    </div>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Info</title>
+    <link rel="stylesheet" href="{% static 'emptbl.css' %}">
+</head>
+
+<body>
+
+     <!--Javascript-->
+     <script>
+        const myDropdown = document.getElementById('my-dropdown');      // gets the element of id('ny-dropdown') and stores the element on myDropdown constant.
+
+        /* function to display selection option for dropdowns on click event*/
+        function displayChoice() {
+        myDropdown.classList.add('display');        //adds class of '.display' to the div with id of 'my-dropdown' when the 'search' input field is clicked..
+        }   
+    </script>
+
+    <section class="wrapper">
+        <div class = "linkers">
+            <div class="logo">
+                <img src="{% static 'logo.png' %}" alt="logo">
+            </div>
+            <nav class="nav-bar">
+                <a href="#">Staff</a>
+                <a href="/table">Customer Info</a>
+                {% if user.is_authenticated and user.is_staff and user.is_superuser %}
+                <a href="signup">Create Account</a>
+                {% endif %}
+            </nav>
+            <div class = "top-left">
+                <div class="form">
+                    <form action="/sign-in" method="post">
+                        <!-- {% csrf_token %}     -->
+                        <input type="text" placeholder="&#xF002; Search" style = "font-family:Arial, FontAwesome" onclick = "displayChoice()"/>    
+                    </form>
+                    <div id = "my-dropdown" class="dropdown">
+                        <select>
+                            <option value="">Ascending</option>
+                            <option value="">Descending</option>
+                            <option value="">Time</option>
+                        </select>
+                    </div>
+               </div>
+           </div>
+    </section>
+
+    <div class="header_fixed">
+        <table>
+            <thead>
+                <tr>
+                    <th>S No.</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in all %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                    {{ item.fname }} {{ item.lname }}
+                    </td>
+                    <td>
+                    {{ item.email }}
+                    </td>
+                    <td><button class="btn">View</button></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+    </body>
+</html>

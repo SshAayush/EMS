@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Info</title>
+    <link rel="stylesheet" href="{% static 'emptbl.css' %}">
+</head>
+
+<body>
+
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    <strong>Message:</strong> {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+  {% endfor %}
+     <!--Javascript-->
+     <script>
+        const myDropdown = document.getElementById('my-dropdown');      // gets the element of id('ny-dropdown') and stores the element on myDropdown constant.
+
+        /* function to display selection option for dropdowns on click event*/
+        function displayChoice() {
+        myDropdown.classList.add('display');        //adds class of '.display' to the div with id of 'my-dropdown' when the 'search' input field is clicked..
+        }   
+    </script>
+
+        <div class = "linkers">
+            <div class="logo">
+                <img src="{% static 'logo.png' %}" alt="logo">
+            </div>
+            <nav class="nav-bar">
+                <a href="/staff">Staff</a>
+                <a href="/table">Customer Info</a>
+            </nav>
+            <div class = "top-left">
+                <div class="form">
+                    <form action="/sign-in" method="post">
+                        <!-- {% csrf_token %}     -->
+                        <input type="text" placeholder="&#xF002; Search" style = "font-family:Arial, FontAwesome" onclick = "displayChoice()"/>    
+                    </form>
+                    <div id = "my-dropdown" class="dropdown">
+                        <select>
+                            <option value="">Ascending</option>
+                            <option value="">Descending</option>
+                            <option value="">Time</option>
+                        </select>
+                    </div>
+               </div>
+                <div class="logout_button">
+                    <a href="/signout"><button class="logout">Log Out</button>
+                </div>
+            </div>
+            </div>
+            <a href="#"></a>
+    <div class="header_fixed">
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th>S No.</th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Joined on</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in all %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>
+                    {{ item.fname }} {{ item.lname }}
+                    </td>
+                    <td>
+                        {{ item.uname }}
+                    </td>
+                    <td>
+                    {{ item.email }}
+                    </td>
+                    <td>
+                        {{ item.starttime }}
+                    </td>
+                    <td><a href="{% url 'additional_info' item.id %}"><button class="btn">More</button></a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    {% comment %} <td><a href="add_customer.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAAAXNSR0IArs4c6QAAAp1JREFUSEulVoFxIzEIXDq5VPJ2J3Yl/q/ETiW+ryTXCT8gJCEJ6Tzzmkkm0UnALguIEC4CgcEEgNsDdWt+xt8ITAAgkH6ov2RvcDbEZmf80eFasKFgzJh8Lsv7j5nQ3Q3ABaCNwIcZOgDs453Wex9oiNJTCrA4uwF4qPEAMQBzTt8AfxTEHBxhA9MN4OQwr3U6Mvo/EswsBYnqOFmC8i2UatKXSQwoJRxgXI2J0E0ERJz+TKlYiqFRu6A357ZvIYyIk7d3EtD/Lo3QnNPhy6VxbIQ9TUir3IuNJCDVgSo9WEWFLzDuvUz8/4JS0I6rTaM4FQqNHbqcFL+gFsdF7X0dPzmVzWSVPO0AXc1Zl5Zp7bpgxY5bBPxwom6tK42crtZW32BczjuX1vlXNuwdT2n2bdXaXkf1iRCrAUmP0u0c043AQnVdFcbe1fFfAL/t4LPUum0QsHFqrc0i4M7Aq3OsuRVF9x1lBzgLaZ37GqjlfUiAdDMN2FMtG4+ErLngae0RzOTwBuFS7FSbouyXjkVnKeV4bJ/Sb/MUysdzecj/EvCvjopZ8zHHsHmcbs1reCR4Ia5ggtQtUbUE3SBu+nM8gMpuV8ezBhIWWVGRnzylGcSOC/S4c5UO2ctE74ma736We8ftVAqmkG3tNvLE4HKgOBOlhnuqcyU9Zfj791FQQ5InzVUzxTxiX5YEHRK9bnu79gDA1pTWoPaTZFTHBwhfUlr+5dr36lyX04fAJ+46JEbxODwm3UgRv8H29Jmdsv1ADlrrBOzRzGkQ+7SYPX1dEvA4e9zXeawhlNY4xOt0UL5VMgaVCPoHWIOYtUlB+A3Qy547S45GxEGITuHCQP6Rk/J3Vng/wdaOPxHLJ2dmlK6pPrE8+/xxQEPmgH8d1xIy5o74XAAAAABJRU5ErkJggg=="></td> {% endcomment %}
+                    <td><a href="/customer_join"><img src="{% static 'image/adduser.png' %}"></a></td>
+                </tr>
+            </tbody>   
+        </table>
+    </div>
+</div>
+    </body>
+</html>
